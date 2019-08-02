@@ -1,7 +1,7 @@
 install:
 	composer install
 lint:
-	composer run-script phpcs -- --standard=PSR12 tests
+	composer run-script phpcs -- --standard=PSR12 routes
 test:
 	composer run-script phpunit
 run:
