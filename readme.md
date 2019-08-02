@@ -1,2 +1,2 @@
 # php-project-lvl3
-[![Build Status](https://travis-ci.org/arkadiy93/php-project-lvl3.svg?branch=master)](https://travis-ci.org/arkadiy93/php-project-lvl3)
+[![Build Status](https://travis-ci.org/arkadiy93/php-project-lvl3.svg?branch=master)](https://travis-ci.org/arkadiy93/php-project-lvl3) [![Maintainability](https://api.codeclimate.com/v1/badges/a0ea04db9dc71c44c038/maintainability)](https://codeclimate.com/github/arkadiy93/php-project-lvl3/maintainability)
