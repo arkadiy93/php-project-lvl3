@@ -21,7 +21,7 @@ $router->get('/', function () {
 
 $router->post('/domains', function (Request $request) {
     $name = $request->get('url');
-    $domains = new Domains;
+    $domains = new Domains();
     $domains->name = $name;
     $domains->save();
     $id = $domains->id;
