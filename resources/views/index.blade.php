@@ -11,5 +11,8 @@
             <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
+        @isset($errors)
+            <span class="text-danger">{{$errors['url']}}</span>
+        @endisset
     </div>
 @endsection

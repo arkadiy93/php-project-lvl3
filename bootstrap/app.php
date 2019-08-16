@@ -21,7 +21,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->withFacades();
+$app->withFacades(true, ['Barryvdh\Debugbar\Facade' => 'Debugbar']);
 
 $app->withEloquent();
 
@@ -80,7 +80,10 @@ $app->singleton(
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
+$app->register(App\Providers\GuzzleServiceProvider::class);
+
 if (env('APP_DEBUG')) {
+    $app->configure('debugbar');
     $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
 }
 

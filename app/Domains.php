@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Domains extends Model 
+class Domains extends Model
 {
 
     /**
@@ -15,7 +15,12 @@ class Domains extends Model
     protected $table = 'domains';
 
     protected $fillable = [
-        'name'
+        'name',
+        'content_length',
+        'status_code',
+        'body',
+        'keywords',
+        'description',
+        'heading'
     ];
-
 }
