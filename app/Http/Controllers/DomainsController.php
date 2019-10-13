@@ -26,7 +26,7 @@ class DomainsController extends Controller
         $validator = \Validator::make($request->all(), [
             'url' => 'required|url',
         ]);
-    
+           
         if ($validator->fails()) {
             $urlError = $validator->errors()->first('url');
             $errors = ['url' => $urlError];
