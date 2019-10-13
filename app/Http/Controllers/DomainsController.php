@@ -47,7 +47,7 @@ class DomainsController extends Controller
         
         $domains = new Domains();
         $domains->name = $url;
-        $domains->body = "some text";
+        $domains->body = $body;
         
         $document = new Document($body);
         $domains->heading = $document->has('h1') ? $document->find('h1')[0]->text() : 'no data';
