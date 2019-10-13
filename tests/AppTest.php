@@ -12,14 +12,6 @@ use GuzzleHttp\Exception\RequestException;
 use App\Http\Controllers\DomainsController;
 
 
-// Create a mock and queue two responses.
-$mock = new MockHandler([
-    new Response(200, ['X-Foo' => 'Bar']),
-    new Response(202, ['Content-Length' => 0]),
-    new RequestException("Error Communicating with Server", new Request('GET', 'test'))
-]);
-
-
 class AppTest extends TestCase
 {
     use DatabaseTransactions;
