@@ -26,7 +26,7 @@ class DomainsController extends Controller
         $validator = \Validator::make($request->all(), [
             'url' => 'required|url',
         ]);
-           
+
         if ($validator->fails()) {
             $urlError = $validator->errors()->first('url');
             $errors = ['url' => $urlError];
@@ -34,7 +34,12 @@ class DomainsController extends Controller
         }
         
         $url = $request->get('url');
-        $response = $this->client->get($url);
+        try {
+            $response = $this->client->get($url);
+        } catch (\Exception $e) {
+            $errors = ['url' => "Wrong url"];
+            return view('index', ['errors' => $errors]);
+        }
     
         $body = $response->getBody()->getContents();
         $code = $response->getStatusCode();
