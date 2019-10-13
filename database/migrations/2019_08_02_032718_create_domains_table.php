@@ -14,7 +14,7 @@ class CreateDomainsTable extends Migration
     public function up()
     {
         Schema::create('domains', function (Blueprint $table) {
-            $table->bigIncrements('id')->nullable();
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->integer('status_code')->nullable();
             $table->longText('body')->nullable();
