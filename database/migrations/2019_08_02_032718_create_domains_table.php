@@ -17,7 +17,7 @@ class CreateDomainsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('status_code');
-            $table->text('body');
+            $table->longText('body');
             $table->integer('content_length');
             $table->string('heading');
             $table->string('description');
