@@ -43,7 +43,7 @@ class DomainsController extends Controller
     
         $body = $response->getBody()->getContents();
         $code = $response->getStatusCode();
-        $contentLengthHeader = (string) $response->getHeader('Content-Length')[0] ?? 'no data';
+        $contentLengthHeader = $response->getHeader('Content-Length')[0] ?? 'no data';
         
         $domains = new Domains();
         $domains->name = $url;
@@ -55,7 +55,7 @@ class DomainsController extends Controller
         $domains->keywords = $document->find('meta[name=keywords]::attr(content)')[0] ?? 'no data';
         
         $domains->status_code = $code;
-        $domains->content_length = $contentLengthHeader;
+        $domains->content_length = (string) $contentLengthHeader;
         $domains->save();
     
         $id = $domains->id;
