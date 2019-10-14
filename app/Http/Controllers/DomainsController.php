@@ -43,7 +43,7 @@ class DomainsController extends Controller
     
         $body = $response->getBody()->getContents();
         $code = $response->getStatusCode();
-        $contentLengthHeader = $response->getHeader('Content-Length')[0] ?? null;
+        $contentLengthHeader = (string) $response->getHeader('Content-Length')[0] ?? 'no data';
         
         $domains = new Domains();
         $domains->name = $url;
