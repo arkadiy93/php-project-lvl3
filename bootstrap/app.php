@@ -82,10 +82,10 @@ $app->singleton(
 
 $app->register(App\Providers\GuzzleServiceProvider::class);
 
-// if (env('APP_DEBUG')) {
-//     $app->configure('debugbar');
-//     $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
-// }
+if (env('APP_DEBUG')) {
+    $app->configure('debugbar');
+    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------
