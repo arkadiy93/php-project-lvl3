@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\Domains::class, function (Faker\Generator $faker) {
+$factory->define(App\Domain::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->url,
         'content_length' => '1000',

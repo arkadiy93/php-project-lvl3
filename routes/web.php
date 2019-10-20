@@ -13,20 +13,20 @@
 
 Route::get('/', [
     'as' => 'index',
-    'uses' => 'DomainsController@initialize'
+    'uses' => 'AppController@index'
 ]);
 
 Route::post('/domains', [
     'as' => 'domains.store',
-    'uses' => 'DomainsController@saveDomain'
+    'uses' => 'DomainsController@save'
 ]);
 
 Route::get('/domains/{id}', [
     'as' => 'domains.show',
-    'uses' => 'DomainsController@showDomain'
+    'uses' => 'DomainsController@show'
 ]);
 
 Route::get('/domains', [
     'as' => 'domains.index',
-    'uses' => 'DomainsController@getDomainList'
+    'uses' => 'DomainsController@showAll'
 ]);

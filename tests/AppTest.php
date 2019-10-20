@@ -8,7 +8,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Client;
-use App\Domains;
+use App\Domain;
 
 
 class AppTest extends TestCase
@@ -20,7 +20,7 @@ class AppTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testIndex()
     {
         $this->get(route('index'))
             ->assertResponseStatus(200);
@@ -28,25 +28,32 @@ class AppTest extends TestCase
 
     public function initiateMockingHandlers()
     {
-        $response_200 = json_encode(array("status" => "successful"));
+        $response_200 = json_encode(["status" => "successful"]);
         $mock = new MockHandler([new Response(200, [], $response_200)]);
         $handler = HandlerStack::create($mock);
         $mockingHandler = new Client(['handler' => $handler]);
         $this->app->instance(Client::class, $mockingHandler);
     }
 
-    public function testSaveDomain()
+    public function testSave()
     {
         $url = 'https://www.google.com';
         $this->initiateMockingHandlers();
-        $this->call('POST', route('domains.store'), ['url' => $url]);
+        $this->post(route('domains.store'), ['url' => $url]);
         $this->seeInDatabase('domains', ['name' => $url]);
     }
 
-    public function testGetDomainList()
+    public function testShowAll()
     {
-        factory(Domains::class, 10)->make();
+        factory(Domain::class, 10)->create();
         $this->get(route('domains.index'))
+            ->assertResponseStatus(200);
+    }
+
+    public function testShow()
+    {
+        factory(Domain::class, 10)->create();
+        $this->get(route('domains.show', ['id' => 1]))
             ->assertResponseStatus(200);
     }
 }

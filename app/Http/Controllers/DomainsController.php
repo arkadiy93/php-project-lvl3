@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Domains;
+use App\Domain;
 use DiDom\Document;
 use GuzzleHttp\Client;
 
@@ -16,12 +16,7 @@ class DomainsController extends Controller
         $this->client = $client;
     }
 
-    public function initialize()
-    {
-        return view('index');
-    }
-
-    public function saveDomain(Request $request)
+    public function save(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'url' => 'required|url',
@@ -44,33 +39,34 @@ class DomainsController extends Controller
         $body = $response->getBody()->getContents();
         $code = $response->getStatusCode();
         $contentLengthHeader = $response->getHeader('Content-Length')[0] ?? 'no data';
-        
-        $domains = new Domains();
-        $domains->name = $url;
-        $domains->body = utf8_encode($body);
-        
+
         $document = new Document($body);
-        $domains->heading = $document->has('h1') ? $document->find('h1')[0]->text() : 'no data';
-        $domains->description = $document->find('meta[name=description]::attr(content)')[0] ?? 'no data';
-        $domains->keywords = $document->find('meta[name=keywords]::attr(content)')[0] ?? 'no data';
+        $heading = $document->has('h1') ? $document->find('h1')[0]->text() : 'no data';
+        $description = $document->find('meta[name=description]::attr(content)')[0] ?? 'no data';
+        $keywords = $document->find('meta[name=keywords]::attr(content)')[0] ?? 'no data';
         
-        $domains->status_code = $code;
-        $domains->content_length = (string) $contentLengthHeader;
-        $domains->save();
-    
-        $id = $domains->id;
-        return redirect()->route('domains.show', ['id' => $id]);
+        Domain::create([
+            'name' => $url,
+            'body' => utf8_encode($body),
+            'heading' => $heading,
+            'description' => $description,
+            'keywords' => $keywords,
+            'status_code' => $code,
+            'content_length' => (string) $contentLengthHeader,
+        ]);
+        
+        return redirect()->route('domains.show', ['id' => $domains->id]);
     }
 
-    public function showDomain($id)
+    public function show($id)
     {
-        $domain = Domains::find($id);
-        return view('list', ['domains' => [$domain]]);
+        $domain = Domain::findOrFail($id);
+        return view('domains.list', ['domains' => [$domain]]);
     }
 
-    public function getDomainList()
+    public function showAll()
     {
-        $domains = Domains::paginate(5);
-        return view('list', ['domains' => $domains]);
+        $domains = Domain::paginate(5);
+        return view('domains.list', ['domains' => $domains]);
     }
 }
