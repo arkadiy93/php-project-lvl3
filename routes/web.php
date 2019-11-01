@@ -18,7 +18,7 @@ Route::get('/', [
 
 Route::post('/domains', [
     'as' => 'domains.store',
-    'uses' => 'DomainsController@save'
+    'uses' => 'DomainsController@store'
 ]);
 
 Route::get('/domains/{id}', [
@@ -28,5 +28,5 @@ Route::get('/domains/{id}', [
 
 Route::get('/domains', [
     'as' => 'domains.index',
-    'uses' => 'DomainsController@showAll'
+    'uses' => 'DomainsController@index'
 ]);

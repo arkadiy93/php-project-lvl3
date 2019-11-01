@@ -52,8 +52,9 @@ class AppTest extends TestCase
 
     public function testShow()
     {
-        factory(Domain::class, 10)->create();
-        $this->get(route('domains.show', ['id' => 1]))
+        $domains = factory(Domain::class, 10)->create();
+        $id = $domains->first()->id;
+        $this->get(route('domains.show', ['id' => $id]))
             ->assertResponseStatus(200);
     }
 }

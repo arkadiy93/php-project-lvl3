@@ -16,7 +16,7 @@ class DomainsController extends Controller
         $this->client = $client;
     }
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'url' => 'required|url',
@@ -45,7 +45,7 @@ class DomainsController extends Controller
         $description = $document->find('meta[name=description]::attr(content)')[0] ?? 'no data';
         $keywords = $document->find('meta[name=keywords]::attr(content)')[0] ?? 'no data';
         
-        Domain::create([
+        $domain = Domain::create([
             'name' => $url,
             'body' => utf8_encode($body),
             'heading' => $heading,
@@ -55,18 +55,18 @@ class DomainsController extends Controller
             'content_length' => (string) $contentLengthHeader,
         ]);
         
-        return redirect()->route('domains.show', ['id' => $domains->id]);
+        return redirect()->route('domains.show', ['id' => $domain->id]);
     }
 
     public function show($id)
     {
         $domain = Domain::findOrFail($id);
-        return view('domains.list', ['domains' => [$domain]]);
+        return view('domains.show', ['domain' => $domain]);
     }
 
-    public function showAll()
+    public function index()
     {
         $domains = Domain::paginate(5);
-        return view('domains.list', ['domains' => $domains]);
+        return view('domains.index', ['domains' => $domains]);
     }
 }
