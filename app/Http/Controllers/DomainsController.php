@@ -16,11 +16,20 @@ class DomainsController extends Controller
         $this->client = $client;
     }
 
+    public function extractContent($content)
+    {
+        if (empty($content)) {
+            return null;
+        }
+        return $content[0];
+    }
+
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'url' => 'required|url',
         ]);
+
 
         if ($validator->fails()) {
             $urlError = $validator->errors()->first('url');
@@ -38,13 +47,20 @@ class DomainsController extends Controller
     
         $body = $response->getBody()->getContents();
         $code = $response->getStatusCode();
-        $contentLengthHeader = $response->getHeader('Content-Length')[0] ?? 'no data';
+        $contentLengthContent = $response->getHeader('Content-Length');
 
         $document = new Document($body);
-        $heading = $document->has('h1') ? $document->find('h1')[0]->text() : 'no data';
-        $description = $document->find('meta[name=description]::attr(content)')[0] ?? 'no data';
-        $keywords = $document->find('meta[name=keywords]::attr(content)')[0] ?? 'no data';
         
+        $headingContent = $document->find('h1');
+        $descriptionContent = $document->find('meta[name=description]::attr(content)');
+        $keywordsContent = $document->find('meta[name=keywords]::attr(content)');
+
+        $contentLengthHeader = $this->extractContent($contentLengthContent);
+        $headingData = $this->extractContent($headingContent);
+        $heading = $headingData ? $headingData->text() : null;
+        $description = $this->extractContent($descriptionContent);
+        $keywords = $this->extractContent($keywordsContent);
+
         $domain = Domain::create([
             'name' => $url,
             'body' => utf8_encode($body),

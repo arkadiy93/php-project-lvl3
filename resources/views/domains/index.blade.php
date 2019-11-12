@@ -22,16 +22,16 @@
                         {{$domain->status_code}}
                     </td>
                     <td>
-                        {{$domain->content_length}}
+                        {{$domain->content_length ?: "no-data"}}
                     </td>
                     <td>
-                        {{$domain->heading}}
+                        {{$domain->heading ?: "no-data"}}
                     </td>
                     <td>
-                        {{$domain->keywords}}
+                        {{$domain->keywords ?: "no-data"}}
                     </td>
                     <td>
-                        {{$domain->description}}
+                        {{$domain->description ?: "no-data"}}
                     </td>
                 </tr>
             @endforeach
