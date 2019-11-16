@@ -16,14 +16,6 @@ class DomainsController extends Controller
         $this->client = $client;
     }
 
-    public function extractContent($content)
-    {
-        if (empty($content)) {
-            return null;
-        }
-        return $content[0];
-    }
-
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -84,5 +76,13 @@ class DomainsController extends Controller
     {
         $domains = Domain::paginate(5);
         return view('domains.index', ['domains' => $domains]);
+    }
+
+    private function extractContent($content)
+    {
+        if (empty($content)) {
+            return null;
+        }
+        return $content[0];
     }
 }
